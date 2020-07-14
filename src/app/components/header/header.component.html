@@ -1,0 +1,51 @@
+<ng-container>
+    <mat-toolbar color="primary" class="example-header">
+        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="sidenav.toggle()">
+            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">menu
+            </mat-icon>
+        </button>
+        <button mat-button routerLink="" style="height: 100%">
+            <span class="title">School App</span>
+            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">home
+            </mat-icon>
+        </button>
+        <span class="example-spacer"></span>
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div style="font-size: 14px;">Español</div>
+            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                <mat-icon>compare_arrows</mat-icon>
+            </button>
+            <div style="font-size: 14px;">Inglés</div>
+        </div>
+    </mat-toolbar>
+    <mat-sidenav-container class="example-container">
+        <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')"
+            (closed)="events.push('close!')" opened class="example-sidenav">
+            <div>
+                <div style="padding: 10px;">
+                    <img src="../../../assets/images/img-sidenav.jpg" alt="school"
+                        style="height: 60px;width: 60px;border-radius: 100%;">
+                </div>
+                <mat-divider></mat-divider>
+                <div>
+                    <mat-selection-list #status [multiple]="false">
+                        <div mat-subheader style="color: #9A9A9D;">Menú</div>
+                        <mat-list-option *ngFor="let item of dataMenu" [value]="item.label" style="color: #9A9A9D;"
+                            [routerLink]="item.route">
+                            <mat-icon mat-list-icon>{{item.icon}}</mat-icon> {{item.label}}
+                        </mat-list-option>
+                    </mat-selection-list>
+                    <!-- <p>
+                        Option selected: {{status.selectedOptions.selected[0]?.value}}
+                    </p> -->
+                </div>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content style="padding: 10px;">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+    <mat-toolbar color="primary" class="example-footer" fxLayout="row" fxLayoutAlign="start center">
+        <h6 style="font-size: 12px;">© 2020 Byte</h6>
+    </mat-toolbar>
+</ng-container>
