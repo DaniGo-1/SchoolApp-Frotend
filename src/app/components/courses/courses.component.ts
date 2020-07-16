@@ -1,9 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Course } from 'src/app/models/course.model';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Location } from '@angular/common';
+import { CoursesService } from 'src/app/services/courses.service';
+import { catchError } from 'rxjs/operators';
+import { empty } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-courses',
@@ -19,14 +25,14 @@ export class CoursesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private activatedRoute : ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getCourses();
   }
 
-  getCourses(){
-    this.activatedRoute.data.subscribe((data : {courses : any}) => {
+  getCourses() {
+    this.activatedRoute.data.subscribe((data: { courses: any }) => {
       console.log(data, 'Data de cursos')
       this.dataSource = new MatTableDataSource(data.courses);
       this.dataSource.paginator = this.paginator;
@@ -39,5 +45,77 @@ export class CoursesComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  createDialog(): void {
+    const dialogRef = this.dialog.open(CreateDialog, {
+      width: '50%',
+      data: new Course(0, '', [])
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+  }
+
+}
+
+@Component({
+  selector: 'create-course',
+  templateUrl: 'create-course.html'
+})
+export class CreateDialog {
+  showCarga = false;
+  showMessage = false;
+  message = '';
+
+  constructor(
+    public dialogRef: MatDialogRef<CreateDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Course,
+    private _courseService: CoursesService,
+    private _snackBar: MatSnackBar,
+    private router: Router,
+    private location: Location) {
+    this.location = location;
+  }
+
+  close(): void {
+    this.dialogRef.close();
+  }
+
+  createCourse() {
+    console.log(this.data, '-- Data Course --')
+    if (this.data.description == '') {
+      this.message = 'Ingrese la Descripción';
+      this.showMessage = true;
+    } else {
+      this.showMessage = false;
+      this.showCarga = true;
+      this._courseService.createCourse(this.data).pipe(
+        catchError((error) => {
+          this.showCarga = false
+          console.log(error, 'Error al crear');
+          this.openSnackBar('Error al crear curso, verifique los datos.');
+          return empty();
+        })
+      ).subscribe((res) => {
+        this.openSnackBar('Curso creado.')
+        console.log(res, 'Data al crear')
+        this.showCarga = false;
+        this.dialogRef.close();
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([this.location.path()]);
+        });
+      })
+    }
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
+  }
+
 
 }

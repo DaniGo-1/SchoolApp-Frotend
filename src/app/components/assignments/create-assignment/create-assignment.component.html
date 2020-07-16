@@ -1,0 +1,36 @@
+<div style="height: 100%;" class="animated fadeIn" fxLayout="row" fxLayoutAlign="center center">
+    <div *ngIf="showCarga" class="backCarga2" fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-evenly"
+        style="background-color: white;width: 40%;height: 60%; border-radius: 2px;box-shadow: 0px 0px 5px 1px #F2F2F2;">
+        <br>
+        <div fxLayoutAlign="center center">
+            <h2 class="title2">Asignación de estudiante</h2>
+        </div>
+        <div style="padding-left: 8%; padding-right: 8%;">
+            <mat-form-field appearance="outline" (click)="addStudent()">
+                <mat-label>Estudiante</mat-label>
+                <input disabled matInput [(ngModel)]="nameStudent" required>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" style="color: #424242;">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div style="padding-left: 8%;; padding-right: 8%;;">
+            <mat-form-field appearance="outline" (click)="addCourse()">
+                <mat-label>Curso</mat-label>
+                <input disabled matInput [(ngModel)]="nameCourse" placeholder="Seleccione un curso" required>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" style="color: #424242;">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <button style="margin-left: 25%; margin-right: 25%;" mat-flat-button color="primary"
+            (click)="createAssignment()">
+            Asignar<mat-icon> add</mat-icon>
+        </button>
+        <h4 *ngIf="showMessage" style="color: red;text-align: center;">{{message}}</h4>
+        <br>
+    </div>
+</div>

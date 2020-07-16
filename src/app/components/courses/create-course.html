@@ -1,0 +1,38 @@
+<div *ngIf="showCarga">
+    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar><br>
+</div>
+<div fxLayout="row">
+    <div fxFlex="50">
+        <h1 style="color: #2E2E2E;" mat-dialog-title>Crear Curso</h1>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="end start">
+        <button mat-button mat-icon-button aria-label="Clear"
+            style="color: #A4A4A4; margin-top: -15px;margin-right: -15px;" (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div mat-dialog-content style="border-top-width: 1.5px;border-top-color: #E6E6E6; border-top-style: solid;">
+    <br>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field style="width: 49%;" appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <input matInput [(ngModel)]="data.description" placeholder="Ingrese Descripción" required>
+            <button mat-button *ngIf="data.description" matSuffix mat-icon-button aria-label="Clear"
+                style="color: #424242;" (click)="data.description=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+</div>
+
+
+<div mat-dialog-actions fxLayout="row">
+    <div fxFlex="50">
+        <h4 *ngIf="showMessage" style="color: red;">{{message}}</h4>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="end center">
+        <button mat-button (click)="close()" color="warn">Cancelar</button>
+        <button mat-button cdkFocusInitial color="primary" (click)="createCourse()">Crear</button>
+    </div>
+</div>

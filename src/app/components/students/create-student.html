@@ -41,7 +41,7 @@
             <mat-form-field appearance="outline" style="width: 49%;">
                 <mat-label>Grado</mat-label>
                 <mat-select [(ngModel)]="data.grade" name="grade">
-                    <mat-option [value]="0">--</mat-option>
+                    <mat-option [value]="0">Seleccione</mat-option>
                     <mat-option *ngFor="let grade of listGrade" [value]="grade.value">
                         {{grade.viewValue}}
                     </mat-option>
@@ -50,7 +50,7 @@
             <mat-form-field appearance="outline" style="width: 49%;">
                 <mat-label>Sección</mat-label>
                 <mat-select [(ngModel)]="data.section" name="section">
-                    <mat-option [value]="''">--</mat-option>
+                    <mat-option [value]="''">Seleccione</mat-option>
                     <mat-option *ngFor="let section of listSection" [value]="section.value">
                         {{section.viewValue}}
                     </mat-option>

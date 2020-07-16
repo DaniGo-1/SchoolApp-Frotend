@@ -1,0 +1,42 @@
+<div *ngIf="showCarga">
+    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar><br>
+</div>
+<div fxLayout="row">
+    <div fxFlex="50">
+        <h2 style="color: #2E2E2E;" mat-dialog-title>Seleccionar curso</h2>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="end start">
+        <button mat-button mat-icon-button aria-label="Clear"
+            style="color: #A4A4A4; margin-top: -15px;margin-right: -15px;" (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div fxLayout="column" mat-dialog-content
+    style="border-top-width: 1.5px;border-top-color: #E6E6E6; border-top-style: solid;">
+    <br>
+    <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Buscar</mat-label>
+        <input (keyup)="applyFilter($event)" matInput type="text" placeholder="Ingrese id del estudiante" #input>
+        <button mat-button *ngIf="input.value" matSuffix mat-icon-button aria-label="Clear" (click)="input.value=''">
+            <mat-icon style="color: gray;">close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-selection-list #courses [multiple]="false" *ngIf="dataSource">
+        <mat-list-option *ngFor="let course of  dataSource.filteredData" [value]="course.description" [mat-dialog-close]="course">
+            {{course.id}}  {{course.description}}
+        </mat-list-option>
+      </mat-selection-list>
+    <br>
+</div>
+
+
+<div mat-dialog-actions fxLayout="row">
+    <div fxFlex="50">
+        <h4 *ngIf="showMessage" style="color: red;">{{message}}</h4>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="end center">
+        <button mat-button (click)="close()" color="warn">Cancelar</button>
+        <!-- <button mat-button cdkFocusInitial color="primary">Crear</button> -->
+    </div>
+</div>

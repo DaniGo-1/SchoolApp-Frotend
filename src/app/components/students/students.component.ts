@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import { SelectionModel } from '@angular/cdk/collections';
 
 interface Search {
   value: string;
@@ -60,6 +61,7 @@ export class StudentsComponent implements OnInit {
   getStudents() {
     this.value = '';
     this.activatedRoute.data.subscribe((data: { students: any }) => {
+      console.log(data, 'esto trae')
       this.dataSource = new MatTableDataSource(data.students);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
