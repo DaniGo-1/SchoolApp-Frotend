@@ -48,7 +48,7 @@ export class CoursesComponent implements OnInit {
 
   createDialog(): void {
     const dialogRef = this.dialog.open(CreateDialog, {
-      width: '50%',
+      width: '35%',
       data: new Course(0, '', [])
     });
 
