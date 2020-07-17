@@ -9,6 +9,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+h1, h2{
+  color: '#424242'
+}
+
 //TEMA DEL PROYECTO
 @import "~@angular/material/theming";
 @include mat-core();

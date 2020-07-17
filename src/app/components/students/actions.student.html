@@ -1,0 +1,109 @@
+<div *ngIf="showCarga">
+    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar><br>
+</div>
+<div fxLayout="row">
+    <div fxFlex="50">
+        <h1 *ngIf="!editar && !eliminar" style="color: #2E2E2E;" mat-dialog-title>Estudiante {{data.id}}</h1>
+        <h1 *ngIf="editar" style="color: #2E2E2E;" mat-dialog-title>Actualizar estudiante {{data.id}}</h1>
+        <h1 *ngIf="eliminar" style="color: #645b5b;" mat-dialog-title>Eliminar estudiante {{data.id}}</h1>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="end start">
+        <button mat-button mat-icon-button aria-label="Clear"
+            style="color: #A4A4A4; margin-top: -15px;margin-right: -15px;" (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div *ngIf="!eliminar" mat-dialog-content
+    style="border-top-width: 1.5px;border-top-color: #E6E6E6; border-top-style: solid;">
+    <br>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field style="width: 49%;" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input [disabled]="!editar" matInput [(ngModel)]="data.firstname" placeholder="Ingrese Nombre" required>
+            <button mat-button *ngIf="data.firstname && editar" matSuffix mat-icon-button aria-label="Clear"
+                style="color: #424242;" (click)="data.firstname=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field style="width: 49%;" appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input [disabled]="!editar" matInput [(ngModel)]="data.lastname" placeholder="Ingrese Apellido" required>
+            <button mat-button *ngIf="data.lastname && editar" matSuffix mat-icon-button aria-label="Clear"
+                style="color: #424242;" (click)="data.lastname=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field style="width: 49%;" appearance="outline">
+            <mat-label>Edad</mat-label>
+            <input [disabled]="!editar" matInput type="number" min="0" max="90" [(ngModel)]="data.age"
+                placeholder="Ingrese Edad" required>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="space-between" style="width: 49%;">
+            <mat-form-field appearance="outline" style="width: 49%;">
+                <mat-label>Grado</mat-label>
+                <mat-select [disabled]="!editar" [(ngModel)]="data.grade" name="grade">
+                    <mat-option [value]="0">Seleccione</mat-option>
+                    <mat-option *ngFor="let grade of listGrade" [value]="grade.value">
+                        {{grade.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 49%;">
+                <mat-label>Sección</mat-label>
+                <mat-select [disabled]="!editar" [(ngModel)]="data.section" name="section">
+                    <mat-option [value]="''">Seleccione</mat-option>
+                    <mat-option *ngFor="let section of listSection" [value]="section.value">
+                        {{section.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field style="width: 49%;" appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input [disabled]="!editar" matInput [(ngModel)]="data.user" placeholder="Ingrese Nombre" required>
+            <button mat-button *ngIf="data.user && editar" matSuffix mat-icon-button aria-label="Clear"
+                style="color: #424242;" (click)="data.user=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field style="width: 49%;" appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input [disabled]="!editar" matInput [(ngModel)]="data.password" placeholder="Ingrese Contraseña" required
+                [type]="hide ? 'password' : 'text'">
+            <button *ngIf="editar" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+</div>
+<div *ngIf="eliminar" mat-dialog-content
+    style="border-top-width: 1.5px;border-top-color: #E6E6E6; border-top-style: solid;">
+    <br>
+    <h3>¿Esta seguro de eliminar el registro?</h3>
+</div>
+
+
+<div mat-dialog-actions fxLayout="row">
+    <div fxFlex="50">
+        <h4 *ngIf="showMessage" style="color: red;">{{message}}</h4>
+    </div>
+    <div *ngIf="!editar && !eliminar" fxFlex="50" fxLayoutAlign="end center">
+        <button mat-button (click)="close()" style="color: gray;">Cerrar</button>
+        <button mat-button color="warn" (click)="eliminar = true">Eliminar</button>
+        <button mat-button color="primary" (click)="editar = true">Editar</button>
+    </div>
+    <div *ngIf="editar" fxFlex="50" fxLayoutAlign="end center">
+        <button mat-button color="warn" (click)="editar = false">Cancelar</button>
+        <button mat-button color="primary" (click)="actualizar()">Actualizar</button>
+    </div>
+    <div *ngIf="eliminar" fxFlex="50" fxLayoutAlign="end center">
+        <button mat-button color="warn" (click)="eliminar = false">Cancelar</button>
+        <button mat-button color="primary" (click)="eliminarStudent()">Aceptar</button>
+    </div>
+</div>

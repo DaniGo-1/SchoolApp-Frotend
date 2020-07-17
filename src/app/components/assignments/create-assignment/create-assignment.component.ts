@@ -26,7 +26,7 @@ export class CreateAssignmentComponent implements OnInit {
   message = '';
 
   constructor(public dialog: MatDialog, private _assignmentService: AssignmentsService, private _snackBar: MatSnackBar, private router : Router) {
-    this.data = new Assignment(0, new Student(0, "", "", 0, 0, "", "", "", []), new Course(0, "", []));
+    this.data = new Assignment(0, new Student(0, "", "", 0, 0, "", "", ""), new Course(0, ""));
   }
 
   ngOnInit(): void {
@@ -108,6 +108,8 @@ export class AddStudent implements OnInit {
   message = '';
   dataSource: MatTableDataSource<Student>;
   panelOpenState = false;
+  value = '';
+  dataDefault : [];
 
   constructor(
     public dialogRef: MatDialogRef<AddStudent>,
@@ -136,6 +138,7 @@ export class AddStudent implements OnInit {
     ).subscribe((data) => {
       this.showCarga = false;
       console.log(data, 'Data traida de estudiantes')
+      this.dataDefault = data;
       this.dataSource = new MatTableDataSource(data);
       console.log(this.dataSource.filteredData, 'esto de la table')
     })
@@ -153,6 +156,11 @@ export class AddStudent implements OnInit {
       verticalPosition: 'bottom',
     });
   }
+
+  limpiar(){
+    this.dataSource = new MatTableDataSource(this.dataDefault);
+    this.value = '';
+  }
 }
 
 @Component({
@@ -165,6 +173,8 @@ export class AddCurso implements OnInit {
   message = '';
   dataSource: MatTableDataSource<Course>;
   panelOpenState = false;
+  value = '';
+  dataDefault : [];
 
   constructor(
     public dialogRef: MatDialogRef<AddCurso>,
@@ -193,6 +203,7 @@ export class AddCurso implements OnInit {
     ).subscribe((data) => {
       this.showCarga = false;
       console.log(data, 'Data traida de cursos')
+      this.dataDefault = data;
       this.dataSource = new MatTableDataSource(data);
       console.log(this.dataSource.filteredData, 'esto de la table')
     })
@@ -209,6 +220,11 @@ export class AddCurso implements OnInit {
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
     });
+  }
+
+  limpiar(){
+    this.dataSource = new MatTableDataSource(this.dataDefault);
+    this.value = '';
   }
 }
 

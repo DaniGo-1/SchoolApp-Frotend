@@ -40,7 +40,7 @@ export class StudentsComponent implements OnInit {
     { value: 'Nombre', viewValue: 'Nombre' }
   ];
 
-  displayedColumns: string[] = ['id', 'nombre', 'apellido', 'edad', 'grado', 'seccion', 'usuario'];
+  displayedColumns: string[] = ['id', 'nombre', 'apellido', 'edad', 'grado', 'seccion', 'usuario', 'actions'];
   dataSource: MatTableDataSource<Student>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -144,8 +144,21 @@ export class StudentsComponent implements OnInit {
   createDialog() {
     const dialogRef = this.dialog.open(CreateStudent, {
       width: '50%',
-      data: new Student(0, "", "", 0, 0, "", "", "", [])
+      data: new Student(0, "", "", 0, 0, "", "", "")
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Diaog closed');
+      console.log(result);
+      // this.getStudentsAll()
+    })
+  }
+
+  actionsDialog(data: Student) {
+    const dialogRef = this.dialog.open(ActionsStudent, {
+      width: '50%',
+      data: new Student(data.id, data.firstname, data.lastname, data.age, data.grade, data.section, data.user, data.password)
+    })
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('Diaog closed');
@@ -227,6 +240,7 @@ export class CreateStudent {
         })
       ).subscribe((data) => {
         console.log(data, 'Data al crear')
+        this.openSnackBar('Estudiante agregado.')
         this.showCarga = false;
         this.dialogRef.close();
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -245,4 +259,118 @@ export class CreateStudent {
     });
   }
 
+}
+
+@Component({
+  selector: 'actions.student',
+  templateUrl: 'actions.student.html'
+})
+
+export class ActionsStudent {
+
+  showCarga = false;
+  showMessage = false;
+  message = '';
+  hide = true;
+  editar = false;
+  eliminar = false;
+
+  listGrade: Grade[] = [
+    { value: 1, viewValue: '1' },
+    { value: 2, viewValue: '2' },
+    { value: 3, viewValue: '3' },
+    { value: 4, viewValue: '4' },
+    { value: 5, viewValue: '5' },
+    { value: 6, viewValue: '6' },
+    { value: 7, viewValue: '7' },
+    { value: 8, viewValue: '8' },
+    { value: 9, viewValue: '9' },
+    { value: 10, viewValue: '10' }
+  ];
+
+  listSection: Search[] = [
+    { value: 'A', viewValue: 'A' },
+    { value: 'B', viewValue: 'B' },
+    { value: 'C', viewValue: 'C' },
+    { value: 'D', viewValue: 'D' },
+    { value: 'E', viewValue: 'E' },
+    { value: 'F', viewValue: 'F' },
+    { value: 'G', viewValue: 'G' }
+  ];
+
+  constructor(
+    public dialogRef: MatDialogRef<CreateStudent>,
+    @Inject(MAT_DIALOG_DATA) public data: Student,
+    private _studentServide: StudentsService,
+    private _snackBar: MatSnackBar,
+    private router: Router,
+    private location: Location) {
+
+    this.location = location;
+  }
+
+  close(): void {
+    console.log('Cierra el dialog')
+
+    this.dialogRef.close();
+  }
+
+  actualizar() {
+    console.log('Esto actualiza', this.data)
+    if (this.data.firstname == '' || this.data.lastname == '' || this.data.age == 0 || this.data.grade == 0 ||
+      this.data.section == '' || this.data.user == '' || this.data.password == '') {
+      this.showCarga = false;
+      this.showMessage = true;
+      this.message = 'Ingrese todos los campos *';
+    } else {
+      this.showMessage = false;
+      this.showCarga = true;
+      this._studentServide.updateStudent(this.data).pipe(
+        catchError((error) => {
+          this.showCarga = false
+          console.log(error)
+          this.openSnackBar('Error al actualizar, verifique los datos.')
+          return empty();
+        })
+      ).subscribe((data) => {
+        console.log(data, 'Data al actualizar')
+        this.openSnackBar('Estudiante actualizado.')
+        this.showCarga = false;
+        this.dialogRef.close();
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([this.location.path()]);
+        });
+      })
+    }
+  }
+
+  eliminarStudent() {
+    this.showMessage = false;
+    this.showCarga = true;
+    this._studentServide.deleteStudent(this.data.id).pipe(
+      catchError((error) => {
+        this.showCarga = false
+        console.log(error)
+        this.openSnackBar('Error al eliminar, verifique los datos.')
+        return empty();
+      })
+    ).subscribe((data) => {
+      console.log(data, 'Data al eliminar')
+      this.openSnackBar('Estudiante eliminado.')
+      this.showCarga = false;
+      this.dialogRef.close();
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([this.location.path()]);
+      });
+    })
+  }
+
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
+  }
 }

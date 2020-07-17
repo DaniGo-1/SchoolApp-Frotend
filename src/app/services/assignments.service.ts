@@ -7,20 +7,27 @@ import { Assignment } from '../models/assignment.model';
   providedIn: 'root'
 })
 export class AssignmentsService {
-
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) { }
 
   private endPoint = 'http://localhost:8080/assignment';
 
   getAssignments(): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get(this.endPoint + '/all', { headers });
+    return this.http.get(this.endPoint + '/all', { headers : this.headers });
   }
 
   createAssignment(assignment: Assignment): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
     let params = JSON.stringify(assignment);
-    return this.http.post(this.endPoint + '/create', params, { headers });
+    return this.http.post(this.endPoint + '/create', params, { headers : this.headers });
+  }
+
+  updateAssignment(assignment : Assignment) : Observable<any>{
+    let params = JSON.stringify(assignment);
+    return this.http.put(this.endPoint + '/update', params, {headers : this.headers});
+  }
+
+  deleteAssignment(id : number) : Observable<any>{
+    return this.http.delete(this.endPoint + `/delete?id=${id}`, {headers : this.headers})
   }
 
 }

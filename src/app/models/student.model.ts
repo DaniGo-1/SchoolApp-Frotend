@@ -7,7 +7,6 @@ export class Student{
         public grade : number,
         public section : String,
         public user : String,
-        public password : String,
-        public assignments : []
+        public password : String
     ){}
 }

@@ -30,7 +30,7 @@ export class AssignmentsComponent implements OnInit {
   ];
 
 
-  displayedColumns: string[] = ['id', 'id_course', 'description', 'id_student', 'firstname','lastname', 'grade', 'section'];
+  displayedColumns: string[] = ['id', 'id_course', 'description', 'id_student', 'firstname','lastname', 'grade', 'section', 'actions'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

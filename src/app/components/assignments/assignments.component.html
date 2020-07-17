@@ -40,42 +40,51 @@
 
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
-                <td mat-cell *matCellDef="let row"> {{row[0].id}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
             </ng-container>
 
             <ng-container matColumnDef="id_course">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Curso </th>
-                <td mat-cell *matCellDef="let row"> {{row[1].id}} </td>
+                <td mat-cell *matCellDef="let row"> {{row['course'].id}} </td>
             </ng-container>
 
             <ng-container matColumnDef="description">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
-                <td mat-cell *matCellDef="let row"> {{row[1].description}} </td>
+                <td mat-cell *matCellDef="let row"> {{row['course'].description}} </td>
             </ng-container>
 
             <ng-container matColumnDef="id_student">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Estudiante </th>
-                <td mat-cell *matCellDef="let row"> {{row[2].id}} </td>
+                <td mat-cell *matCellDef="let row"> {{row['student'].id}} </td>
             </ng-container>
 
             <ng-container matColumnDef="firstname">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                <td mat-cell *matCellDef="let row"> {{row[2].firstname}} </td>
+                <td mat-cell *matCellDef="let row"> {{row['student'].firstname}} </td>
             </ng-container>
 
             <ng-container matColumnDef="lastname">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
-                <td mat-cell *matCellDef="let row"> {{row[2].lastname}} </td>
+                <td mat-cell *matCellDef="let row"> {{row['student'].lastname}} </td>
             </ng-container>
 
             <ng-container matColumnDef="grade">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Grado </th>
-                <td mat-cell *matCellDef="let row"> {{row[2].grade}} </td>
+                <td mat-cell *matCellDef="let row"> {{row['student'].grade}} </td>
             </ng-container>
 
             <ng-container matColumnDef="section">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Sección </th>
-                <td mat-cell *matCellDef="let row"> {{row[2].section}} </td>
+                <td mat-cell *matCellDef="let row"> {{row['student'].section}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button color="primary" aria-label="icon editar" [routerLink]="['actions-assignment', row.id]">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

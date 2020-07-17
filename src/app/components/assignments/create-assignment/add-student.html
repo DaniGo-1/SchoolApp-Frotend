@@ -17,8 +17,8 @@
     <br>
     <mat-form-field appearance="outline" fxFlex="100">
         <mat-label>Buscar</mat-label>
-        <input (keyup)="applyFilter($event)" matInput type="text" placeholder="Ingrese id del estudiante" #input>
-        <button mat-button *ngIf="input.value" matSuffix mat-icon-button aria-label="Clear" (click)="input.value=''">
+        <input (keyup)="applyFilter($event)" [(ngModel)]="value" matInput type="text" placeholder="Ingrese id del estudiante" #input>
+        <button mat-button *ngIf="input.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpiar()">
             <mat-icon style="color: gray;">close</mat-icon>
         </button>
     </mat-form-field>

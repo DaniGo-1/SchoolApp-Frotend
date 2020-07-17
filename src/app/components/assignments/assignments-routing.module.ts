@@ -7,6 +7,7 @@ import { AssignmentResolverService } from 'src/app/interfaces/assignment-resolve
 const routes: Routes = [
   { path: '', component: AssignmentsComponent, resolve: { assignments: AssignmentResolverService } },
   { path: 'create-assignment', loadChildren: () => import('./create-assignment/create-assignment.module').then(m => m.CreateAssignmentModule) },
+  { path: 'actions-assignment/:id', loadChildren: () => import('./actions-assignment/actions-assignment.module').then(m => m.ActionsAssignmentModule) },
 ];
 
 @NgModule({
