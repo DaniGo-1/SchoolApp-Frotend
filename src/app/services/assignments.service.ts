@@ -12,6 +12,10 @@ export class AssignmentsService {
 
   private endPoint = 'http://localhost:8080/assignment';
 
+  getAssignById(id : number) : Observable<any>{
+    return this.http.get(this.endPoint + `/${id}`,{headers : this.headers});
+  }
+
   getAssignments(): Observable<any> {
     return this.http.get(this.endPoint + '/all', { headers : this.headers });
   }

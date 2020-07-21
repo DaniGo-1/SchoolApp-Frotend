@@ -1,3 +1,65 @@
-<div style="height: 100%;" class="animated fadeInRight" fxLayout="row" fxLayoutAlign="center center">
-    <p>actions-assignment works!</p>
+<div style="height: 100%;" class="animated fadeInUp" fxLayout="row" fxLayoutAlign="center center">
+    <div *ngIf="showCarga" class="backCarga2" fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-evenly"
+        style="background-color: white;width: 40%;height: 70%; border-radius: 2px;box-shadow: 0px 0px 5px 1px #F2F2F2; padding-left: 3%; padding-right: 3%;">
+        <br>
+        <div fxLayoutAlign="center center">
+            <h1 class="title2">Asignación de estudiante {{data.id}}</h1>
+        </div>
+        <div *ngIf="!editar">
+            <p for="estudiante" style="font-size: 12px; color : '#848484';margin-bottom: 10px;">Estudiante</p>
+            <div style="margin-left: 15px;">
+                <p>Id: {{data.student.id}}</p>
+                <p>Nombre: {{data.student.firstname}} {{data.student.lastname}}</p>
+                <p>Grado: {{data.student.grade}}</p>
+                <p>Sección: {{data.student.section}}</p>
+            </div>
+            <p for="estudiante" style="font-size: 12px; color : '#848484';margin-bottom: 10px;">Curso</p>
+            <div style="margin-left: 15px;">
+                <p>Id: {{data.course.id}}</p>
+                <p>Descripción: {{data.course.description}}</p>
+            </div>
+        </div>
+        <div *ngIf="editar">
+            <mat-form-field appearance="outline">
+                <mat-label>Estudiante</mat-label>
+                <input disabled matInput [(ngModel)]="nameStudent" required>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" style="color: #424242;" (click)="selectStudent()">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div *ngIf="editar">
+            <mat-form-field appearance="outline">
+                <mat-label>Curso</mat-label>
+                <input disabled matInput [(ngModel)]="nameCourse" placeholder="Seleccione un curso" required>
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" style="color: #424242;">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <h4 *ngIf="showMessage" style="color: red;text-align: center;">{{message}}</h4>
+        <div *ngIf="!editar" fxLayout="row" fxLayoutAlign="space-between">
+            <button style="width: 33.33%; color: gray;" mat-button routerLink="/assignments">
+                <mat-icon> keyboard_arrow_left</mat-icon>Regresar
+            </button>
+            <button style="width: 33.33%;" mat-button color="primary" cdkFocusInitial (click)="editar = true">
+                <mat-icon> create</mat-icon>Editar
+            </button>
+            <button style="width: 33.33%;" mat-button color="warn">
+                <mat-icon> delete</mat-icon>Eliminar
+            </button>
+        </div>
+        <div *ngIf="editar" fxLayout="row" fxLayoutAlign="space-between">
+            <button style="width: 50%;" mat-button color="primary" cdkFocusInitial (click)="editar = false">
+                <mat-icon> keyboard_arrow_left</mat-icon>Cancelar
+            </button>
+            <button style="width: 50%;" mat-button color="warn">
+                <mat-icon> delete</mat-icon>Actualizar
+            </button>
+        </div>
+        <br>
+    </div>
 </div>
