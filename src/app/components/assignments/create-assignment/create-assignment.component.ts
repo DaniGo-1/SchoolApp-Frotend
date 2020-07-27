@@ -178,7 +178,7 @@ export class AddCurso implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddCurso>,
-    @Inject(MAT_DIALOG_DATA) public data: Student,
+    @Inject(MAT_DIALOG_DATA) public data: Course,
     private _courseService: CoursesService,
     private _snackBar: MatSnackBar) { }
 

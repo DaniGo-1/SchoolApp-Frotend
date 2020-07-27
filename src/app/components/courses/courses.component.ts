@@ -196,7 +196,7 @@ export class ActionsCourse{
     }
   }
 
-  eliminarStudent() {
+  eliminarCourse() {
     this.showMessage = false;
     this.showCarga = true;
     this._courseServide.deleteCourse(this.data.id).pipe(

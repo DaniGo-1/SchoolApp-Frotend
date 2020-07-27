@@ -23,16 +23,16 @@
             </div>
         </div>
         <div *ngIf="editar">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" (click)="selectStudent()">
                 <mat-label>Estudiante</mat-label>
                 <input disabled matInput [(ngModel)]="nameStudent" required>
-                <button mat-button matSuffix mat-icon-button aria-label="Clear" style="color: #424242;" (click)="selectStudent()">
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" style="color: #424242;" >
                     <mat-icon>keyboard_arrow_down</mat-icon>
                 </button>
             </mat-form-field>
         </div>
         <div *ngIf="editar">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" (click)="selectCourse()">
                 <mat-label>Curso</mat-label>
                 <input disabled matInput [(ngModel)]="nameCourse" placeholder="Seleccione un curso" required>
                 <button mat-button matSuffix mat-icon-button aria-label="Clear" style="color: #424242;">
@@ -48,16 +48,16 @@
             <button style="width: 33.33%;" mat-button color="primary" cdkFocusInitial (click)="editar = true">
                 <mat-icon> create</mat-icon>Editar
             </button>
-            <button style="width: 33.33%;" mat-button color="warn">
+            <button style="width: 33.33%;" mat-button color="warn" (click)="deleteAssignment()">
                 <mat-icon> delete</mat-icon>Eliminar
             </button>
         </div>
         <div *ngIf="editar" fxLayout="row" fxLayoutAlign="space-between">
-            <button style="width: 50%;" mat-button color="primary" cdkFocusInitial (click)="editar = false">
+            <button style="width: 50%;" mat-button color="warn" cdkFocusInitial (click)="cancelarEditar()">
                 <mat-icon> keyboard_arrow_left</mat-icon>Cancelar
             </button>
-            <button style="width: 50%;" mat-button color="warn">
-                <mat-icon> delete</mat-icon>Actualizar
+            <button style="width: 50%;" mat-button color="primary" (click)="updateAssignment()">
+                <mat-icon> done</mat-icon>Actualizar
             </button>
         </div>
         <br>

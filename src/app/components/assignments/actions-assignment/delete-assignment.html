@@ -1,0 +1,27 @@
+<div *ngIf="showCarga">
+    <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar><br>
+</div>
+<div fxLayout="row">
+    <div fxFlex="50">
+        <h1 style="color: #645b5b;" mat-dialog-title>Eliminar Asignación</h1>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="end start">
+        <button mat-button mat-icon-button aria-label="Clear"
+            style="color: #A4A4A4; margin-top: -15px;margin-right: -15px;" (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div mat-dialog-content
+    style="border-top-width: 1.5px;border-top-color: #E6E6E6; border-top-style: solid;">
+    <br>
+    <h3>¿Esta seguro de eliminar el registro?</h3>
+</div>
+
+
+<div mat-dialog-actions fxLayout="row">
+    <div fxFlex="100" fxLayoutAlign="end center">
+        <button mat-button color="warn" (click)="close()">Cancelar</button>
+        <button mat-button color="primary" (click)="delete()">Aceptar</button>
+    </div>
+</div>
